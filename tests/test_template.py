@@ -18,6 +18,7 @@ LICENSE_SPEC = {
 def generate_copier_answers():
     return {
         'project_name': f'{chance.word()}-{chance.word()}',
+        'project_package': f'{chance.word()}_{chance.word()}',
         'project_description': chance.sentence(),
         'project_version': f'{random.randint(0, 10)}.{random.randint(0, 10)}.{random.randint(0, 10)}',
         'project_keywords': f'{chance.word()},{chance.word()},{chance.word()}',
@@ -109,3 +110,16 @@ def test_template_pyproject_toml(copie: Copie):
     assert pyproject['project']['urls']['homepage'] == f"https://github.com/{answers['vcs_github_path']}"
     assert pyproject['project']['urls']['repository'] == f"https://github.com/{answers['vcs_github_path']}.git"
     assert pyproject['project']['urls']['changelog'] == f"https://github.com/{answers['vcs_github_path']}/blob/main/CHANGELOG.md"
+
+
+def test_template_package(copie: Copie):
+    answers = generate_copier_answers()
+    result = copie.copy(extra_answers=answers)
+
+    assert result.exit_code == 0
+    assert result.exception is None
+    assert result.project_dir.is_dir()
+
+    init_file = result.project_dir / 'src' / answers['project_package'] / '__init__.py'
+    assert init_file.exists()
+    assert answers['project_package'] in init_file.read_text(encoding='utf-8')
