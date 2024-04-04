@@ -9,3 +9,6 @@
 
 ---
   !include copier/questions/vcs.yml
+
+---
+  !include copier/questions/python.yml
