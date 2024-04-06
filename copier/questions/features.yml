@@ -9,3 +9,9 @@ with_nested_commands:
   help: "With nested commands?"
   default: False
   when: "{{ with_cli }}"
+
+with_pyinstaller:
+  type: bool
+  help: "Enable pyinstaller bundler?"
+  default: False
+  when: "{{ with_cli }}"

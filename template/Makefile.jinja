@@ -25,6 +25,12 @@ tox: ## Run tox
 build: ## Build project
 	pdm build
 
+{% if with_pyinstaller %}
+.PHONY: bundle
+bundle: ## Bundle project with pyinstaller
+	pdm run pyinstaller {{ project_name }}.spec
+{% endif %}
+
 .PHONY: publish
 publish: build ## Publish project
 	pdm publish --build
