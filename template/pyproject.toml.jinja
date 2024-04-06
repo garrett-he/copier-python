@@ -17,7 +17,11 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
 ]
-dependencies = []
+dependencies = [
+    {% if with_cli %}
+    "click>=8.1.8",
+    {% endif %}
+]
 
 [project.urls]
 homepage = "https://github.com/{{ vcs_github_path }}"
@@ -34,6 +38,10 @@ dev = [
     "pytest-cov>=6.0.0",
     "tox>=4.24.1",
 ]
+{% if with_cli %}
+[project.scripts]
+{{ project_name }} = "{{ project_package }}.__cli__:main"
+{% endif %}
 
 [build-system]
 requires = ["pdm-backend"]

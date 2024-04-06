@@ -12,3 +12,6 @@
 
 ---
   !include copier/questions/python.yml
+
+---
+  !include copier/questions/features.yml
