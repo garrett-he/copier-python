@@ -25,6 +25,13 @@ tox: ## Run tox
 build: ## Build project
 	pdm build
 
+{% if with_cython %}
+.PHONY: compile
+compile: ## Compile Python files
+	pdm run python setup.py build_ext --build-lib build
+	cp ./src/{{ project_package }}/__cli__.py ./build/{{ project_package }}/
+{% endif %}
+
 {% if with_pyinstaller %}
 .PHONY: bundle
 bundle: ## Bundle project with pyinstaller

@@ -15,3 +15,8 @@ with_pyinstaller:
   help: "Enable pyinstaller bundler?"
   default: False
   when: "{{ with_cli }}"
+
+with_cython:
+  type: bool
+  help: "Enable cython compiler?"
+  default: False

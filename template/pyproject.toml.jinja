@@ -31,6 +31,9 @@ changelog = "https://github.com/{{ vcs_github_path }}/blob/main/CHANGELOG.md"
 [dependency-groups]
 dev = [
     "chance>=0.110",
+    {% if with_cython %}
+    "cython>=3.0.11",
+    {% endif %}
     "pre-commit>=4.1.0",
     {% if with_pyinstaller %}
     "pyinstaller>=6.11.1",
