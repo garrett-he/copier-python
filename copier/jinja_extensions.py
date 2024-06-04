@@ -5,12 +5,17 @@ import unicodedata
 from datetime import date
 
 from jinja2.ext import Extension, Environment
+from packaging.specifiers import SpecifierSet
 
 
 def slugify_filter(value: str, separator: str = '-') -> str:
     value = unicodedata.normalize('NFKD', str(value)).encode('ascii', 'ignore').decode('ascii')
     value = re.sub(r'[^\w\s-]', '', value.lower())
     return re.sub(r'[-_\s]+', separator, value).strip('-_')
+
+
+def version_list(value: str, versions: list[str]) -> list[str]:
+    return list(SpecifierSet(value).filter(versions))
 
 
 class DateExtension(Extension):
@@ -35,3 +40,10 @@ class SlugifyExtension(Extension):
         super().__init__(environment)
 
         environment.filters['slugify'] = slugify_filter
+
+
+class VersionExtension(Extension):
+    def __init__(self, environment: Environment):
+        super().__init__(environment)
+
+        environment.filters['version_list'] = version_list

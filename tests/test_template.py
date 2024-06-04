@@ -1,5 +1,6 @@
 import random
 
+import toml
 from chance import chance
 from pytest_copie.plugin import Copie
 
@@ -25,6 +26,8 @@ def generate_copier_answers():
         'copyright_license': chance.pickone(list(LICENSE_SPEC.keys())),
         'copyright_year': str(random.randint(2000, 2024)),
         'vcs_github_path': f'{chance.word()}/{chance.word()}-{chance.word()}'.lower(),
+        'python_version': chance.pickone(['>=3.10', '>=3.11', '>=3.12']),
+        'with_tox': chance.pickone([True, False]),
     }
 
 
@@ -80,3 +83,44 @@ def test_template_licenses(copie: Copie):
         else:
             assert f'Copyright (C) {answers["copyright_year"]} {answers["copyright_holder_name"]} <{answers["copyright_holder_email"]}>' in readme
             assert f'see [{license_spec["filename"]}](./{license_spec["filename"]}).' in readme
+
+
+def test_template_pyproject_toml(copie: Copie):
+    answers = generate_copier_answers()
+    result = copie.copy(extra_answers=answers)
+
+    assert result.exit_code == 0
+    assert result.exception is None
+    assert result.project_dir.is_dir()
+    assert result.project_dir.joinpath('pyproject.toml').exists()
+
+    with open(result.project_dir.joinpath('pyproject.toml'), 'r', encoding='utf-8') as fp:
+        pyproject = toml.loads(fp.read())
+
+    assert pyproject['project']['name'] == answers['project_name']
+    assert pyproject['project']['version'] == answers['project_version']
+    assert pyproject['project']['description'] == answers['project_description']
+    assert pyproject['project']['requires-python'] == answers['python_version']
+    assert pyproject['project']['authors'][0]['name'] == answers['copyright_holder_name']
+    assert pyproject['project']['authors'][0]['email'] == answers['copyright_holder_email']
+    assert pyproject['project']['license']['text'] == answers['copyright_license']
+    assert pyproject['project']['keywords'] == answers['project_keywords'].split(',')
+
+    assert pyproject['project']['urls']['homepage'] == f"https://github.com/{answers['vcs_github_path']}"
+    assert pyproject['project']['urls']['repository'] == f"https://github.com/{answers['vcs_github_path']}.git"
+    assert pyproject['project']['urls']['changelog'] == f"https://github.com/{answers['vcs_github_path']}/blob/main/CHANGELOG.md"
+
+
+def test_template_tox(copie: Copie):
+    answers = generate_copier_answers()
+    answers['with_tox'] = True
+    result = copie.copy(extra_answers=answers)
+
+    assert result.exit_code == 0
+    assert result.project_dir.joinpath('tox.ini').exists()
+
+    answers['with_tox'] = False
+    result = copie.copy(extra_answers=answers)
+
+    assert result.exit_code == 0
+    assert not result.project_dir.joinpath('tox.ini').exists()

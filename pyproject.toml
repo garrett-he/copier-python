@@ -34,6 +34,7 @@ dev = [
     "pylint>=3.3.6",
     "pytest>=8.3.5",
     "pytest-copie>=0.2.2",
+    "toml>=0.10.2",
 ]
 
 [tool.pdm]
