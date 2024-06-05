@@ -18,6 +18,7 @@ LICENSE_SPEC = {
 def generate_copier_answers():
     return {
         'project_name': f'{chance.word()}-{chance.word()}',
+        'project_package': f'{chance.word()}_{chance.word()}',
         'project_description': chance.sentence(),
         'project_version': f'{random.randint(0, 10)}.{random.randint(0, 10)}.{random.randint(0, 10)}',
         'project_keywords': f'{chance.word()},{chance.word()},{chance.word()}',
@@ -124,3 +125,15 @@ def test_template_tox(copie: Copie):
 
     assert result.exit_code == 0
     assert not result.project_dir.joinpath('tox.ini').exists()
+
+
+def test_template_package(copie: Copie):
+    answers = generate_copier_answers()
+    result = copie.copy(extra_answers=answers)
+
+    assert result.exit_code == 0
+    assert result.exception is None
+    assert result.project_dir.is_dir()
+
+    about_file = result.project_dir / 'src' / answers['project_package'] / '__about__.py'
+    assert answers['project_package'] in about_file.read_text(encoding='utf-8')
