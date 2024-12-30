@@ -9,3 +9,9 @@ with_nested_commands:
   help: "With nested commands?"
   default: False
   when: "{{ with_cli }}"
+
+with_nuitka:
+  type: bool
+  help: "With nuitka?"
+  default: False
+  when: "{{ with_cli }}"

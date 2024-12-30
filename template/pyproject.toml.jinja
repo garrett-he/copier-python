@@ -36,6 +36,9 @@ changelog = "https://github.com/{{ vcs_github_path }}/blob/main/CHANGELOG.md"
 [dependency-groups]
 dev = [
     "chance (>=0.110,<0.111)",
+    {% if with_nuitka %}
+    "nuitka (>=2.6.7, <3.0.0)",
+    {% endif %}
     "pre-commit (>=4.1.0,<5.0.0)",
     "pylint (>=3.3.4,<4.0.0)",
     "pytest (>=8.3.4,<9.0.0)",
@@ -43,9 +46,14 @@ dev = [
     "tox (>=4.23.2,<5.0.0)",
 ]
 
-[tool.pdm]
-distribution = true
-
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
+
+[tool.pdm]
+distribution = true
+
+{% if with_nuitka %}
+[tool.pdm.scripts]
+build-win32 = "nuitka --standalone --onefile --output-filename={{ project_name }}.exe --output-dir=dist src/{{ project_package }}/__main__.py"
+{% endif %}
