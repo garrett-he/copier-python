@@ -1,12 +1,15 @@
 __pycache__/
 
 /.venv/
+/.pdm-build/
 /.pdm-python
 /.python-version
 
 /.pytest_cache/
+{% if with_tox %}
 /.tox/
-/.coverage
+{% endif %}
+/.coverage*
 /coverage.xml
 
 /build/

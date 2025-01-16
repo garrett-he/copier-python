@@ -43,3 +43,7 @@ addopts = "--ignore='template' -p no:warnings"
 
 [tool.pdm]
 distribution = false
+
+[tool.pdm.scripts]
+lint = "pylint src/ tests/"
+test = "pytest --cov=src --cov-report=term-missing"
