@@ -38,7 +38,9 @@ dev = [
     "pylint (>=3.3.4,<4.0.0)",
     "pytest (>=8.3.4,<9.0.0)",
     "pytest-cov (>=6.0.0,<7.0.0)",
+    {% if with_tox %}
     "tox (>=4.23.2,<5.0.0)",
+    {% endif %}
 ]
 
 [build-system]

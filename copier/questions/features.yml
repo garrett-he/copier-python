@@ -15,3 +15,9 @@ with_nuitka:
   help: "With nuitka?"
   default: False
   when: "{{ with_cli }}"
+
+with_tox:
+  type: bool
+  help: "With tox?"
+  default: True
+  when: "{{ with_tox }}"
