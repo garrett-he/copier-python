@@ -31,6 +31,7 @@ dev = [
     "chance (>=0.110,<0.111)",
     "copier-templates-extensions (>=0.3.0,<1.0.0)",
     "pre-commit (>=4.1.0,<5.0.0)",
+    "packaging (>=24.2,<25.0)",
     "pylint (>=3.3.4,<4.0.0)",
     "pytest (>=8.3.4,<9.0.0)",
     "pytest-copie (>=0.2.1,<1.0.0)",

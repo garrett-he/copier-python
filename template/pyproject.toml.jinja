@@ -11,16 +11,11 @@ license = { text = "{{ copyright_license }}" }
 keywords = ["{{ project_keywords.split(',') | join('", "') }}"]
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3",{% for i in python_version | version_list(['3.10', '3.11', '3.12', '3.13', '3.14']) %}
+    "Programming Language :: Python :: {{ i }}",{% endfor %}
 ]
-dependencies = [
-    {% if with_cli %}
-    "click (>=8.1.8,<9.0.0)",
-    {% endif %}
+dependencies = [{% if with_cli %}
+    "click (>=8.1.8,<9.0.0)",{% endif %}
 ]
 
 [project.urls]
@@ -53,7 +48,6 @@ build-backend = "pdm.backend"
 [tool.pdm]
 distribution = true
 
-{% if with_nuitka %}
 [tool.pdm.scripts]
-build-win32 = "nuitka --standalone --onefile --output-filename={{ project_name }}.exe --output-dir=dist src/{{ project_package }}/__main__.py"
-{% endif %}
+lint = "pylint src/ tests/"
+test = "pytest --cov=src --cov-report=term-missing"
