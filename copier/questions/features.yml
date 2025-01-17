@@ -3,4 +3,3 @@ with_tox:
   type: bool
   help: "With tox?"
   default: True
-  when: "{{ with_tox }}"
