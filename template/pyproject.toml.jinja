@@ -14,26 +14,17 @@ classifiers = [
     "Programming Language :: Python :: 3",{% for i in python_version | version_list(['3.10', '3.11', '3.12', '3.13', '3.14']) %}
     "Programming Language :: Python :: {{ i }}",{% endfor %}
 ]
-dependencies = [{% if with_cli %}
-    "click (>=8.1.8,<9.0.0)",{% endif %}
-]
+dependencies = []
 
 [project.urls]
 homepage = "https://github.com/{{ vcs_github_path }}"
 repository = "https://github.com/{{ vcs_github_path }}.git"
 changelog = "https://github.com/{{ vcs_github_path }}/blob/main/CHANGELOG.md"
 
-{% if with_cli %}
-[project.scripts]
-{{ project_name }} = "{{ project_package }}.__main__:main"
-{% endif %}
 
 [dependency-groups]
 dev = [
     "chance (>=0.110,<0.111)",
-    {% if with_nuitka %}
-    "nuitka (>=2.6.7, <3.0.0)",
-    {% endif %}
     "pre-commit (>=4.1.0,<5.0.0)",
     "pylint (>=3.3.4,<4.0.0)",
     "pytest (>=8.3.4,<9.0.0)",
