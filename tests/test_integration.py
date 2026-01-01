@@ -28,7 +28,8 @@ def test_generated_project_structure(copie: Any, copier_answers: dict[str, objec
 
     assert project_dir.joinpath('pyproject.toml').is_file()
     assert project_dir.joinpath('README.md').is_file()
-    assert project_dir.joinpath('LICENSE').is_file()
+    license_file = 'UNLICENSE' if copier_answers['copyright_license'] == 'Unlicense' else 'LICENSE'
+    assert project_dir.joinpath(license_file).is_file()
     assert project_dir.joinpath('justfile').is_file()
     assert project_dir.joinpath('.pre-commit-config.yaml').is_file()
     assert project_dir.joinpath(f'src/{package}/__init__.py').is_file()
