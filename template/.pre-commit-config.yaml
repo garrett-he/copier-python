@@ -1,0 +1,26 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-ast
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: check-toml
+      - id: check-yaml
+      - id: fix-byte-order-marker
+
+  - repo: local
+    hooks:
+      - id: lint
+        name: Run linter and format check
+        entry: just lint
+        language: system
+        pass_filenames: false
+        always_run: true
+      - id: typecheck
+        name: Run type checker
+        entry: just typecheck
+        language: system
+        pass_filenames: false
+        always_run: true

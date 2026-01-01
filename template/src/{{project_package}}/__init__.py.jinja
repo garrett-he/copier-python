@@ -1,0 +1,10 @@
+"""{{ project_description }}"""
+
+from importlib.metadata import PackageNotFoundError, version
+
+__version__: str
+
+try:
+    __version__ = version('{{ project_package }}')
+except PackageNotFoundError:
+    __version__ = 'unknown'

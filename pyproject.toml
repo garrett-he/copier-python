@@ -1,0 +1,59 @@
+[project]
+name = "copier-python"
+version = "0.1.0"
+description = "A Copier template for Python projects."
+requires-python = ">=3.12"
+authors = [
+  { name = "Garrett HE", email = "garrett.he@outlook.com" }
+]
+readme = "README.md"
+license = { text = "MIT" }
+keywords = ["copier", "template", "code-generation", "python"]
+classifiers = [
+  "Development Status :: 2 - Pre-Alpha",
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Code Generators",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+]
+
+[project.urls]
+Homepage = "https://github.com/garrett-he/copier-python"
+Repository = "https://github.com/garrett-he/copier-python.git"
+Issues = "https://github.com/garrett-he/copier-python/issues"
+Changelog = "https://github.com/garrett-he/copier-python/blob/main/CHANGELOG.md"
+
+[project.optional-dependencies]
+dev = [
+  "chance>=0.110",
+  "copier-template-extensions>=0.3.3",
+  "mypy>=2.1.0",
+  "pre-commit>=4.6.0",
+  "pytest>=9.0.3",
+  "pytest-copie>=0.2.2",
+  "ruff>=0.15.13",
+]
+
+[tool.ruff]
+line-length = 120
+indent-width = 4
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"
+line-ending = "lf"
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "N", "UP", "D", "B", "SIM", "C4", "TCH", "RUF"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.mypy]
+strict = true
+show_error_codes = true
+
+[tool.pytest.ini_options]
+addopts = "--ignore='template' --ignore='template/tests' -p no:warnings"
