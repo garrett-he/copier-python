@@ -1,8 +1,8 @@
 # copier-python
 
-[![license](https://img.shields.io/github/license/garrett-he/copier-python)](https://github.com/garrett-he/copier-python/blob/main/LICENSE)
-[![copier](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/copier-org/copier/master/img/badge/badge-grayscale-inverted-border-orange.json)](https://github.com/copier-org/copier)
-[![ci](https://github.com/garrett-he/copier-python/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/garrett-he/copier-python/actions/workflows/ci.yml)
+[![License](https://img.shields.io/github/license/garrett-he/copier-python)](https://github.com/garrett-he/copier-python/blob/main/LICENSE)
+[![Copier](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/copier-org/copier/master/img/badge/badge-grayscale-inverted-border-orange.json)](https://github.com/copier-org/copier)
+[![Continuous Integration](https://github.com/garrett-he/copier-python/actions/workflows/ci.yml/badge.svg)](https://github.com/garrett-he/copier-python/actions/workflows/ci.yml)
 
 A [Copier][1] template for scaffolding modern Python libraries.
 
