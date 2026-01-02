@@ -18,12 +18,22 @@ classifiers = [
   "Programming Language :: Python :: {{ i }}",
   {% endfor %}
 ]
+dependencies = [
+  {% if with_cli %}
+  "typer>=0.25.1",
+  {% endif %}
+]
 
 [project.urls]
 Homepage = "https://github.com/{{ vcs_github_path }}"
 Repository = "https://github.com/{{ vcs_github_path }}.git"
 Issues = "https://github.com/{{ vcs_github_path }}/issues"
 Changelog = "https://github.com/{{ vcs_github_path }}/blob/main/CHANGELOG.md"
+
+{% if with_cli %}
+[project.scripts]
+{{ project_package }} = "{{ project_package }}.cli:app"
+{% endif %}
 
 [project.optional-dependencies]
 dev = [

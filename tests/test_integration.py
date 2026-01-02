@@ -86,3 +86,63 @@ def test_ci_python_matrix(copie: Any, copier_answers: dict[str, object]) -> None
     assert '"3.13"' in ci_yml
     assert '"3.14"' in ci_yml
     assert '"3.12"' not in ci_yml
+
+
+def test_with_cli_includes_cli_files(copie: Any, copier_answers: dict[str, object]) -> None:
+    """When with_cli is true, the project includes CLI module and scripts entry point."""
+    result = copie.copy(extra_answers=_answers_with(copier_answers, with_cli=True))
+    assert result.exit_code == 0
+
+    package = str(copier_answers['project_package'])
+    assert result.project_dir.joinpath(f'src/{package}/cli.py').is_file()
+    assert result.project_dir.joinpath('tests/test_cli.py').is_file()
+
+    pyproject = result.project_dir.joinpath('pyproject.toml').read_text()
+    assert f'{package} = "{package}.cli:app"' in pyproject
+    assert 'typer>=0.25.1' in pyproject
+
+
+def test_without_cli_excludes_cli_files(copie: Any, copier_answers: dict[str, object]) -> None:
+    """When with_cli is false, the project does not include CLI files."""
+    result = copie.copy(extra_answers=_answers_with(copier_answers, with_cli=False))
+    assert result.exit_code == 0
+
+    package = str(copier_answers['project_package'])
+    assert not result.project_dir.joinpath(f'src/{package}/cli.py').exists()
+    assert not result.project_dir.joinpath('tests/test_cli.py').exists()
+
+    pyproject = result.project_dir.joinpath('pyproject.toml').read_text()
+    assert f'{package} = "{package}.cli:app"' not in pyproject
+    assert 'typer' not in pyproject
+
+
+def test_cli_runs_and_prints_hello(copie: Any, copier_answers: dict[str, object]) -> None:
+    """The generated CLI prints 'Hello, world!' when invoked."""
+    import subprocess
+
+    result = copie.copy(extra_answers=_answers_with(copier_answers, with_cli=True))
+    assert result.exit_code == 0
+
+    project_dir = result.project_dir
+    package = str(copier_answers['project_package'])
+
+    # Install dependencies in the generated project so the package is importable.
+    sync = subprocess.run(
+        ['uv', 'sync', '--extra', 'dev'],
+        cwd=project_dir,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert sync.returncode == 0, sync.stderr
+
+    # Run the generated CLI via uv run.
+    cli_result = subprocess.run(
+        ['uv', 'run', package],
+        cwd=project_dir,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert cli_result.returncode == 0, cli_result.stderr
+    assert 'Hello, world!' in cli_result.stdout
