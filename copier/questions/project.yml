@@ -1,0 +1,18 @@
+---
+project_name:
+  type: str
+  help: "Name of this project:"
+  default: "{{ _folder_name }}"
+  validator: >-
+    {% if not project_name %}
+    Project name cannot be empty.
+    {% endif %}
+
+project_description:
+  type: str
+  help: "Description of this project:"
+  placeholder: "New project generated via copier."
+  validator: >-
+    {% if not project_description %}
+    Project description cannot be empty.
+    {% endif %}

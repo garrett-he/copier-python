@@ -1,0 +1,84 @@
+[project]
+name = "copier-python"
+version = "0.1.0"
+description = "A Copier template for Python packages."
+readme = "README.md"
+keywords = [ "code-generation", "copier", "python", "template" ]
+license = "MIT"
+maintainers = [ { name = "Garrett HE", email = "garrett.he@outlook.com" } ]
+authors = [ { name = "Garrett HE", email = "garrett.he@outlook.com" } ]
+requires-python = ">=3.12"
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development :: Code Generators",
+]
+optional-dependencies.dev = [
+    "chance>=0.110",
+    "copier-template-extensions>=0.3.3",
+    "pre-commit>=4.6.0",
+    "pyproject-fmt>=2.24.0",
+    "pyrefly>=1.0.0",
+    "pytest>=9.0.3",
+    "pytest-copie>=0.3.1",
+    "ruff>=0.15.17",
+    "rumdl>=0.2.16",
+]
+urls.Changelog = "https://github.com/garrett-he/copier-python/blob/main/CHANGELOG.md"
+urls.Documentation = "https://github.com/garrett-he/copier-python/blob/main/README.md"
+urls.Homepage = "https://github.com/garrett-he/copier-python"
+urls.Issues = "https://github.com/garrett-he/copier-python/issues"
+urls.Repository = "https://github.com/garrett-he/copier-python.git"
+
+[tool.ruff]
+line-length = 120
+indent-width = 4
+format.indent-style = "space"
+format.quote-style = "single"
+format.line-ending = "lf"
+lint.select = [ "A", "B", "C4", "D", "E", "F", "I", "N", "RUF", "SIM", "TCH", "UP", "W" ]
+lint.pydocstyle.convention = "google"
+
+[tool.pyproject-fmt]
+indent = 4
+keep_full_version = true
+generate_python_version_classifiers = true
+max_supported_python = "3.14"
+
+[tool.pyrefly]
+errors.implicit-abstract-class = "error"
+errors.implicitly-defined-attribute = "error"
+errors.missing-override-decorator = "error"
+errors.unannotated-attribute = "error"
+errors.unannotated-parameter = "error"
+errors.unannotated-return = "error"
+errors.untyped-import = "error"
+preset = "strict"
+project-includes = [ "copier/extensions", "tests" ]
+
+[tool.pytest]
+addopts = [ "--ignore=template" ]
+filterwarnings = [
+    "ignore::copier.errors.DirtyLocalWarning",
+    "ignore::DeprecationWarning",
+]
+
+[tool.rumdl]
+line-length = 120
+disable = [
+    "MD033",
+    "MD034",
+    "MD041",
+]
+MD004.style = "dash"
+MD007.indent = 2
+MD013.line_length = 120
+MD013.strict = false
+MD013.code_blocks = false
+MD013.tables = false
+MD024.allow_different_nesting = true
+MD026.punctuation = ".,;:!"
