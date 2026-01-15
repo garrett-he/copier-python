@@ -1,0 +1,5 @@
+---
+with_cli:
+  type: bool
+  help: "With CLI?"
+  default: False

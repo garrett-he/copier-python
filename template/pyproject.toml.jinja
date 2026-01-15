@@ -20,7 +20,11 @@ classifiers = [
     "Programming Language :: Python :: {{ i }}",
     {% endfor %}
 ]
-dependencies = []
+dependencies = [
+    {% if with_cli %}
+    "typer>=0.26.7",
+    {% endif %}
+]
 optional-dependencies.dev = [
     "pre-commit>=4.6.0",
     "pyproject-fmt>=2.24.0",
@@ -34,6 +38,9 @@ urls.Documentation = "https://github.com/{{ vcs_github_path }}/blob/main/README.
 urls.Homepage = "https://github.com/{{ vcs_github_path }}"
 urls.Issues = "https://github.com/{{ vcs_github_path }}/issues"
 urls.Repository = "https://github.com/{{ vcs_github_path }}.git"
+{% if with_cli %}
+scripts.{{ project_name }} = "{{ project_package }}.cli:app"
+{% endif %}
 
 [tool.hatch]
 build.targets.wheel.packages = ["src/{{ project_package }}"]

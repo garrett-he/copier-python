@@ -56,3 +56,29 @@ def test_pyproject_version_list_filter(copie: Copie, base_answers: dict[str, str
     assert '"Programming Language :: Python :: 3.13"' in content
     assert '"Programming Language :: Python :: 3.14"' in content
     assert '"Programming Language :: Python :: 3.12"' not in content
+
+
+def test_pyproject_with_cli(copie: Copie, base_answers: dict[str, str]) -> None:
+    """Test pyproject.toml includes CLI dependencies when with_cli is true."""
+    answers = {**base_answers, 'with_cli': True}
+    result = copie.copy(extra_answers=answers)
+
+    assert result.exit_code == 0
+    assert result.project_dir is not None
+
+    content = (result.project_dir / 'pyproject.toml').read_text()
+    assert 'typer>=0.26.7' in content
+    assert f'scripts.{base_answers["project_name"]} = "{base_answers["project_package"]}.cli:app"' in content
+
+
+def test_pyproject_without_cli(copie: Copie, base_answers: dict[str, str]) -> None:
+    """Test pyproject.toml excludes CLI dependencies when with_cli is false."""
+    answers = {**base_answers, 'with_cli': False}
+    result = copie.copy(extra_answers=answers)
+
+    assert result.exit_code == 0
+    assert result.project_dir is not None
+
+    content = (result.project_dir / 'pyproject.toml').read_text()
+    assert 'typer' not in content
+    assert 'scripts.' not in content
