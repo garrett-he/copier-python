@@ -1,0 +1,89 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "{{ project_name }}"
+version = "{{ project_version }}"
+description = "{{ project_description }}"
+readme = "README.md"
+keywords = [ {% if project_keywords %}"{{ project_keywords.split(',') | join('", "') }}"{% endif %}]
+license = "{{ copyright_license }}"
+maintainers = [ { name = "{{ copyright_holder_name }}", email = "{{ copyright_holder_email }}" } ]
+authors = [ { name = "{{ copyright_holder_name }}", email = "{{ copyright_holder_email }}" } ]
+requires-python = "{{ python_version }}"
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3 :: Only",
+    {% for i in python_version | version_list(['3.12', '3.13', '3.14']) %}
+    "Programming Language :: Python :: {{ i }}",
+    {% endfor %}
+]
+dependencies = []
+optional-dependencies.dev = [
+    "pre-commit>=4.6.0",
+    "pyproject-fmt>=2.24.0",
+    "pyrefly>=1.0.0",
+    "pytest>=9.0.3",
+    "ruff>=0.15.17",
+    "rumdl>=0.2.16",
+]
+urls.Changelog = "https://github.com/{{ vcs_github_path }}/blob/main/CHANGELOG.md"
+urls.Documentation = "https://github.com/{{ vcs_github_path }}/blob/main/README.md"
+urls.Homepage = "https://github.com/{{ vcs_github_path }}"
+urls.Issues = "https://github.com/{{ vcs_github_path }}/issues"
+urls.Repository = "https://github.com/{{ vcs_github_path }}.git"
+
+[tool.hatch]
+build.targets.wheel.packages = ["src/{{ project_package }}"]
+
+[tool.ruff]
+line-length = 120
+indent-width = 4
+format.indent-style = "space"
+format.quote-style = "single"
+format.line-ending = "lf"
+lint.select = [ "A", "B", "C4", "D", "E", "F", "I", "N", "RUF", "SIM", "TCH", "UP", "W" ]
+lint.pydocstyle.convention = "google"
+
+[tool.pyproject-fmt]
+indent = 4
+keep_full_version = true
+generate_python_version_classifiers = true
+max_supported_python = "3.14"
+
+[tool.pyrefly]
+errors.implicit-abstract-class = "error"
+errors.implicitly-defined-attribute = "error"
+errors.missing-override-decorator = "error"
+errors.unannotated-attribute = "error"
+errors.unannotated-parameter = "error"
+errors.unannotated-return = "error"
+errors.untyped-import = "error"
+preset = "strict"
+project-includes = [ "copier/extensions", "tests" ]
+
+[tool.pytest]
+ini_options.addopts = "-ra --strict-markers --strict-config --cov={{ project_package }} --cov-report=term-missing"
+
+[tool.coverage]
+report.fail_under = 80
+report.show_missing = true
+run.source = ["{{ project_package }}"]
+
+[tool.rumdl]
+line-length = 120
+disable = [
+    "MD033",
+    "MD034",
+    "MD041",
+]
+MD004.style = "dash"
+MD007.indent = 2
+MD013.line_length = 120
+MD013.strict = false
+MD013.code_blocks = false
+MD013.tables = false
+MD024.allow_different_nesting = true
+MD026.punctuation = ".,;:!"
