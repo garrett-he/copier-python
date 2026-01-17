@@ -8,7 +8,7 @@ version = "{{ project_version }}"
 description = "{{ project_description }}"
 readme = "README.md"
 keywords = [ {% if project_keywords %}"{{ project_keywords.split(',') | join('", "') }}"{% endif %}]
-license = "{{ copyright_license }}"
+license = { text = "{{ copyright_license }}" }
 maintainers = [ { name = "{{ copyright_holder_name }}", email = "{{ copyright_holder_email }}" } ]
 authors = [ { name = "{{ copyright_holder_name }}", email = "{{ copyright_holder_email }}" } ]
 requires-python = "{{ python_version }}"
@@ -30,6 +30,7 @@ optional-dependencies.dev = [
     "pyproject-fmt>=2.24.0",
     "pyrefly>=1.0.0",
     "pytest>=9.0.3",
+    "pytest-cov>=7.1.0",
     "ruff>=0.15.17",
     "rumdl>=0.2.16",
 ]

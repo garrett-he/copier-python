@@ -1,5 +1,8 @@
 """Tests for {{project_package}} version information."""
 
+from importlib.metadata import PackageNotFoundError
+from unittest.mock import patch
+
 import {{ project_package }}
 
 
@@ -15,3 +18,13 @@ def test_version_format() -> None:
     parts = version.split('.')
     assert len(parts) >= 2
     assert all(part.isdigit() for part in parts[:2])
+
+def test_version_fallback_on_package_not_found() -> None:
+    """Verify that __version__ falls back to 'unknown' when package metadata is missing."""
+    import importlib
+
+    with patch('importlib.metadata.version', side_effect=PackageNotFoundError):
+        importlib.reload({{ project_package }})
+    assert {{ project_package }}.__version__ == 'unknown'
+
+    importlib.reload({{ project_package }})
