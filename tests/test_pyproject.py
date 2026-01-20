@@ -82,3 +82,27 @@ def test_pyproject_without_cli(copie: Copie, base_answers: dict[str, str]) -> No
     content = (result.project_dir / 'pyproject.toml').read_text()
     assert 'typer' not in content
     assert 'scripts.' not in content
+
+
+def test_pyproject_with_changelog(copie: Copie, base_answers: dict[str, str]) -> None:
+    """Test pyproject.toml includes Changelog URL when with_changelog is true."""
+    answers = {**base_answers, 'with_changelog': True}
+    result = copie.copy(extra_answers=answers)
+
+    assert result.exit_code == 0
+    assert result.project_dir is not None
+
+    content = (result.project_dir / 'pyproject.toml').read_text()
+    assert 'urls.Changelog' in content
+
+
+def test_pyproject_without_changelog(copie: Copie, base_answers: dict[str, str]) -> None:
+    """Test pyproject.toml excludes Changelog URL when with_changelog is false."""
+    answers = {**base_answers, 'with_changelog': False}
+    result = copie.copy(extra_answers=answers)
+
+    assert result.exit_code == 0
+    assert result.project_dir is not None
+
+    content = (result.project_dir / 'pyproject.toml').read_text()
+    assert 'urls.Changelog' not in content

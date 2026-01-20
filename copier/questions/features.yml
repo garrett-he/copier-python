@@ -1,7 +1,7 @@
 ---
 with_changelog:
   type: bool
-  help: "With CLI?"
+  help: "With CHANGELOG?"
   default: True
 
 with_cli:
