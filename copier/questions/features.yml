@@ -1,4 +1,9 @@
 ---
+with_changelog:
+  type: bool
+  help: "With CLI?"
+  default: True
+
 with_cli:
   type: bool
   help: "With CLI?"

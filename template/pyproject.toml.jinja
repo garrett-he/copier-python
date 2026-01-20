@@ -34,7 +34,9 @@ optional-dependencies.dev = [
     "ruff>=0.15.17",
     "rumdl>=0.2.16",
 ]
+{% if with_changelog %}
 urls.Changelog = "https://github.com/{{ vcs_github_path }}/blob/main/CHANGELOG.md"
+{% endif %}
 urls.Documentation = "https://github.com/{{ vcs_github_path }}/blob/main/README.md"
 urls.Homepage = "https://github.com/{{ vcs_github_path }}"
 urls.Issues = "https://github.com/{{ vcs_github_path }}/issues"
