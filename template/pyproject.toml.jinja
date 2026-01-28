@@ -72,7 +72,7 @@ errors.unannotated-parameter = "error"
 errors.unannotated-return = "error"
 errors.untyped-import = "error"
 preset = "strict"
-project-includes = [ "copier/extensions", "tests" ]
+project-includes = [ "src", "tests" ]
 
 [tool.pytest]
 ini_options.addopts = "-ra --strict-markers --strict-config --cov={{ project_package }} --cov-report=term-missing"
