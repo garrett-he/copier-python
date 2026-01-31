@@ -4,19 +4,19 @@ version = "0.1.0"
 description = "A Copier template for Python projects."
 requires-python = ">=3.12"
 authors = [
-  { name = "Garrett HE", email = "garrett.he@outlook.com" }
+    { name = "Garrett HE", email = "garrett.he@outlook.com" }
 ]
 readme = "README.md"
 license = { text = "MIT" }
 keywords = ["copier", "template", "code-generation", "python"]
 classifiers = [
-  "Development Status :: 2 - Pre-Alpha",
-  "Intended Audience :: Developers",
-  "Topic :: Software Development :: Code Generators",
-  "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.12",
-  "Programming Language :: Python :: 3.13",
-  "Programming Language :: Python :: 3.14",
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Code Generators",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
 
 [project.urls]
@@ -27,13 +27,13 @@ Changelog = "https://github.com/garrett-he/copier-python/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 dev = [
-  "chance>=0.110",
-  "copier-template-extensions>=0.3.3",
-  "mypy>=2.1.0",
-  "pre-commit>=4.6.0",
-  "pytest>=9.0.3",
-  "pytest-copie>=0.2.2",
-  "ruff>=0.15.13",
+    "chance>=0.110",
+    "copier-template-extensions>=0.3.3",
+    "mypy>=2.1.0",
+    "pre-commit>=4.6.0",
+    "pytest>=9.0.3",
+    "pytest-copie>=0.2.2",
+    "ruff>=0.15.13",
 ]
 
 [tool.ruff]

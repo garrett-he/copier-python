@@ -4,7 +4,7 @@ version = "{{ project_version }}"
 description = "{{ project_description }}"
 requires-python = "{{ python_version }}"
 authors = [
-  { name = "{{ copyright_holder_name }}", email = "{{ copyright_holder_email }}" }
+    { name = "{{ copyright_holder_name }}", email = "{{ copyright_holder_email }}" }
 ]
 readme = "README.md"
 license = { text = "{{ copyright_license }}" }
@@ -12,16 +12,16 @@ license = { text = "{{ copyright_license }}" }
 keywords = ["{{ project_keywords.split(',') | join('", "') }}"]
 {% endif %}
 classifiers = [
-  "Development Status :: 2 - Pre-Alpha",
-  "Programming Language :: Python :: 3",
-  {% for i in python_version | version_list(['3.12', '3.13', '3.14']) %}
-  "Programming Language :: Python :: {{ i }}",
-  {% endfor %}
+    "Development Status :: 2 - Pre-Alpha",
+    "Programming Language :: Python :: 3",
+    {% for i in python_version | version_list(['3.12', '3.13', '3.14']) %}
+    "Programming Language :: Python :: {{ i }}",
+    {% endfor %}
 ]
 dependencies = [
-  {% if with_cli %}
-  "typer>=0.25.1",
-  {% endif %}
+    {% if with_cli %}
+    "typer>=0.25.1",
+    {% endif %}
 ]
 
 [project.urls]
@@ -37,11 +37,11 @@ Changelog = "https://github.com/{{ vcs_github_path }}/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 dev = [
-  "mypy>=2.1.0",
-  "pre-commit>=4.6.0",
-  "pytest>=9.0.3",
-  "pytest-cov>=7.1.0",
-  "ruff>=0.15.13",
+    "mypy>=2.1.0",
+    "pre-commit>=4.6.0",
+    "pytest>=9.0.3",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.15.13",
 ]
 
 [build-system]
@@ -71,7 +71,7 @@ strict = true
 show_error_codes = true
 
 [tool.pytest.ini_options]
-addopts = "-ra --strict-markers --strict-config"
+addopts = "-ra --strict-markers --strict-config --cov={{ project_package }} --cov-report=term-missing"
 
 [tool.coverage.run]
 source = ["{{ project_package }}"]

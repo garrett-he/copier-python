@@ -3,6 +3,8 @@ default:
 
 install-dev:
     uv sync --extra dev
+
+pre-commit: install-dev
     uv run pre-commit install
 
 lint:
